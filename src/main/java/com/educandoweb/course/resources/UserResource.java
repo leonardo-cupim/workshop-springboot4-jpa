@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.educandoweb.course.entities.User;
 import com.educandoweb.course.services.UserService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping( value = "/users" )
@@ -25,9 +28,17 @@ public class UserResource {
         return ResponseEntity.ok().body(list); 
     } 
 
-    @GetMapping( value = "/{id}" )
+    @GetMapping
     public ResponseEntity<User> findById(@PathVariable Long id) {
         User u = service.findById(id);
         return ResponseEntity.ok().body(u); 
     } 
+
+    @PostMapping("/users")
+    public ResponseEntity<User> insert(@RequestBody User user) {
+        user = service.insertUser(user);
+        
+        return ResponseEntity.ok().body(user);
+    }
+    
 }
